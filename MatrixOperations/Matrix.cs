@@ -59,6 +59,7 @@ namespace MatrixOperations
         public double this[int i, int j]
         {
             get { return this.matrix[i, j]; }
+            private set { this.matrix[i, j] = value; }
         }
 
         public static Matrix operator +(Matrix first, Matrix second)
@@ -118,6 +119,26 @@ namespace MatrixOperations
             return new Matrix(temporary);
         }
 
+        public static implicit operator Matrix(double[,] matrix)
+        {
+            return new Matrix(matrix);
+        }
+
+        public static implicit operator double[,](Matrix matrix)
+        {
+            int rows = matrix.Rows;
+            int columns = matrix.Columns;
+            double[,] temporary = new double[rows, columns];
+            for(int i = 0; i < rows; i++)
+            {
+                for(int j = 0; j < columns; j++)
+                {
+                    temporary[i, j] = matrix[i, j];
+                }
+            }
+            return temporary;
+        }
+
         public Matrix Inverse()
         {
             if(this.Rows == this.Columns)
@@ -141,14 +162,16 @@ namespace MatrixOperations
                     }
                 }
 
-                double[,] temporary = new double[rows, columns];
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        temporary[i, j] = this[i, j];
-                    }
-                }
+                //double[,] temporary = new double[rows, columns];
+                //for (int i = 0; i < rows; i++)
+                //{
+                //    for (int j = 0; j < columns; j++)
+                //    {
+                //        temporary[i, j] = this[i, j];
+                //    }
+                //}
+
+                double[,] temporary = this;
 
                 for(int i = 0; i < rows; i++)
                 {
@@ -257,6 +280,77 @@ namespace MatrixOperations
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// Rotates the matrix.
+        /// </summary>
+        /// <param name="angle">The angle</param>
+        public void Rotate(double x = 0, double y = 0, double z = 0)
+        {
+            if(this.Rows > 3)
+            {
+                throw new Exception();
+            }
+
+            double[,] rotationMatrix;
+            if(this.Rows == 2)
+            {
+                rotationMatrix = new double[2, 2] { 
+                                                    { Math.Cos(x), -Math.Sin(x) }, 
+                                                    { Math.Sin(x), Math.Cos(x) }
+                                                };
+            }
+
+            double[,] rotateX = {   { 1, 0, 0 }, 
+                                    { 0, Math.Cos(x), -Math.Sin(x) }, 
+                                    { 0, Math.Sin(x), Math.Cos(x) }
+                                };
+
+            double[,] rotateY = {   { Math.Cos(x), 0, Math.Sin(x) }, 
+                                    { 0, 1, 0 }, 
+                                    { -Math.Sin(x), 0, Math.Cos(x) }
+                                };
+
+            double[,] rotateZ = {   { Math.Cos(x), -Math.Sin(x), 0 }, 
+                                    { Math.Sin(x), Math.Cos(x), 0 }, 
+                                    { 0, 0, 1 }
+                                };
+
+            rotationMatrix = (Matrix)rotateX * rotateY * rotateZ;
+
+            this.matrix = rotationMatrix * this;
+        }
+
+        public void Translate(double x = 0, double y = 0, double z = 0)
+        {
+            if(this.Rows > 3)
+            {
+                throw new Exception();
+            }
+            double[] temporary = { x, y, z };
+            for(int  i = 0; i < this.Rows; i++)
+            {
+                for(int j = 0; i < this.Columns; i++)
+                {
+                    this[i, j] += temporary[i];
+                }
+            }
+        }
+
+        public void Scale(double x = 1, double y = 1, double z = 1)
+        {
+            if(this.Rows > 3)
+            {
+                throw new Exception();
+            }
+            double[] scaleFactor = { x, y, z };
+            double[,] scalingMatrix = new double[this.Rows, this.Rows];
+            for(int i = 0; i < this.Rows; i++)
+            {
+                scalingMatrix[i, i] = scaleFactor[i];
+            }
+            this.matrix = new Matrix(scalingMatrix) * this;
         }
 
         /// <summary>
