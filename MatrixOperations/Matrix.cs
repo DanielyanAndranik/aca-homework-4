@@ -62,6 +62,12 @@ namespace MatrixOperations
             private set { this.matrix[i, j] = value; }
         }
 
+        /// <summary>
+        /// Overloaded + operator, adds two matrices
+        /// </summary>
+        /// <param name="first">The first matrix</param>
+        /// <param name="second">The second matrix</param>
+        /// <returns>Returns the sum matrix</returns>
         public static Matrix operator +(Matrix first, Matrix second)
         {
             if (first.Rows == second.Rows && first.Columns == second.Columns)
@@ -78,7 +84,7 @@ namespace MatrixOperations
                 }
                 return new Matrix(temporary);
             }
-            throw new Exception();
+            throw new Exception("The sizes of the matrices are not match");
         }
 
         public static Matrix operator *(Matrix first, Matrix second)
@@ -104,7 +110,7 @@ namespace MatrixOperations
             throw new Exception();
         }
 
-        public static Matrix operator *(int first, Matrix second)
+        public static Matrix operator *(double factor, Matrix second)
         {
             int rows = second.Rows;
             int columns = second.Columns;
@@ -113,7 +119,7 @@ namespace MatrixOperations
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    temporary[i, j] = first * second[i, j];
+                    temporary[i, j] = factor * second[i, j];
                 }
             }
             return new Matrix(temporary);
