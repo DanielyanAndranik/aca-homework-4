@@ -95,7 +95,7 @@ namespace MatrixOperations
                 }
                 return new Matrix(temporary);
             }
-            throw new Exception("The sizes of the matrices are not match");
+            throw new Exception("Error: Sizes of the matrices are not match");
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace MatrixOperations
                 }
                 return new Matrix(temporary);
             }
-            throw new Exception();
+            throw new Exception("Error: Sizes of the matrices are not match");
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace MatrixOperations
                         }
                         if(isZero)
                         {
-                            throw new Exception();
+                            throw new Exception("Error: Matrix has no inverse one");
                         }
                     }
 
@@ -259,7 +259,7 @@ namespace MatrixOperations
                 return new Matrix(inverse);
 
             }
-            throw new Exception();
+            throw new Exception("Error: Rectangular matrix has no inverse one.");
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace MatrixOperations
             {
                 for(int j = 0; j < this.Columns; j++)
                 {
-                    Console.Write("{0}\t", this[i, j]);
+                    Console.Write("M[{0}, {1}] = {2} \t", i, j, this[i, j]);
                 }
                 Console.WriteLine('\n');
             }
