@@ -11,7 +11,7 @@ namespace MatrixOperations
         static void Main(string[] args)
         {
             Console.WriteLine("Follow these steps to add two matrices \n");
-
+                   
             Matrix matrixOne = CreateMatrix();
             matrixOne.Print();
 
@@ -21,6 +21,8 @@ namespace MatrixOperations
             try
             {
                 Matrix tempOne = matrixOne + matrixTwo;
+                Console.WriteLine("The sum matrix");
+                tempOne.Print();
             }
             catch(Exception e)
             {
@@ -41,6 +43,8 @@ namespace MatrixOperations
             try
             {
                 Matrix tempTwo = matrixThree * matrixFour;
+                Console.WriteLine("The product matrix");
+                tempTwo.Print();
             }
             catch (Exception e)
             {
@@ -57,6 +61,7 @@ namespace MatrixOperations
 
             double factor = ScalarFactor();
             Matrix tempThree = factor * matrixFive;
+            Console.WriteLine("The product matrix");
             tempThree.Print();
 
 
@@ -68,6 +73,7 @@ namespace MatrixOperations
             try
             {
                 Matrix tempFour = matrixSix.Inverse();
+                Console.WriteLine("The inverse matrix");
                 tempFour.Print();
             }
             catch(Exception e)
@@ -84,6 +90,7 @@ namespace MatrixOperations
             matrixSeven.Print();
 
             Matrix tempFive = matrixSix.Transpose();
+            Console.WriteLine("The transpose matrix");
             tempFive.Print();
 
             Console.WriteLine("Input a new matrix and check if it is orthogonal \n");
@@ -93,19 +100,21 @@ namespace MatrixOperations
 
             Console.WriteLine("The matrix is " + ((matrixEight.IsOrthogonal()) ? "" : "not") + " orthogonal");
 
-            Console.WriteLine("Input a new matrix and do some transforations with it \n");
+            Console.WriteLine("Input a 3d matrix ( Matrix that has 3 rows ) and do some transforations with it \n");
 
             Matrix matrixNine = CreateMatrix();
             matrixNine.Print();
 
-
-
             matrixNine.Translate3D(1, 2, 3);
+            Console.WriteLine("The matrix after translation 1 point across x-axis, 2 point across y-axis, 3 point across z-axis");
+            matrixNine.Print();
 
             matrixNine.Scale3D(2, 3, 6);
+            Console.WriteLine("The matrix after scaling 2 times across x-axis, 4 times across y-axis, 6 times across z-axis");
+            matrixNine.Print();
 
             matrixNine.Rotate3D(90, 45, 0);
-
+            Console.WriteLine("The matrix after rotation 90 degres across x-axis, 45 degres y-axis, 0 degres across z-axis");
             matrixNine.Print();
 
             Console.WriteLine("Input a new matrix and get the largest and the smallest elements of it \n");
@@ -116,9 +125,14 @@ namespace MatrixOperations
             Console.WriteLine("The largest element of the matrix is {0}", matrixTen.GetLargest());
             Console.WriteLine("The largest element of the matrix is {0}", matrixTen.GetSmallest());
 
+            Console.WriteLine("Bye :) \n");
         }
 
-        static Matrix CreateMatrix()
+        /// <summary>
+        /// User enters dimensions of the matrix, and creates it randomly or manual.
+        /// </summary>
+        /// <returns>Returns the matrix</returns>
+        public static Matrix CreateMatrix()
         {
             string userInput;
 
@@ -212,6 +226,11 @@ namespace MatrixOperations
             while (true);
         }
 
+
+        /// <summary>
+        /// User enters the factor, the he wants to multyply.
+        /// </summary>
+        /// <returns>returns the factor.</returns>
         static double ScalarFactor()
         {
             string userInput;

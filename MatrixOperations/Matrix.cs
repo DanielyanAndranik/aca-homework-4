@@ -38,7 +38,7 @@ namespace MatrixOperations
             {
                 for (int j = 0; j < Columns; j++)
                 {
-                    matrix[i, j] = random.Next(10);
+                    matrix[i, j] = random.Next();
                 }
             }
         }
@@ -182,6 +182,7 @@ namespace MatrixOperations
         /// <returns>Returns the inverse matrix.</returns>
         public Matrix Inverse()
         {
+            // Check if the matrix is square
             if(this.Rows == this.Columns)
             {
                 int rows = this.Rows;
@@ -202,15 +203,6 @@ namespace MatrixOperations
                         }
                     }
                 }
-
-                //double[,] temporary = new double[rows, columns];
-                //for (int i = 0; i < rows; i++)
-                //{
-                //    for (int j = 0; j < columns; j++)
-                //    {
-                //        temporary[i, j] = this[i, j];
-                //    }
-                //}
 
                 double[,] temporary = this;
 
