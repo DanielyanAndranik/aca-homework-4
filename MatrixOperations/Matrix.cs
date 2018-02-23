@@ -8,8 +8,19 @@ namespace MatrixOperations
 {
     class Matrix
     {
+        /// <summary>
+        /// 2 dimensional double array.
+        /// </summary>
         private double[,] matrix;
+
+        /// <summary>
+        /// Count of rows.
+        /// </summary>
         public readonly int Rows;
+
+        /// <summary>
+        /// Count of columns.
+        /// </summary>
         public readonly int Columns;
 
         /// <summary>
@@ -63,7 +74,7 @@ namespace MatrixOperations
         }
 
         /// <summary>
-        /// Overloaded + operator, adds two matrices
+        /// Operator for adding tow matrices.
         /// </summary>
         /// <param name="first">The first matrix</param>
         /// <param name="second">The second matrix</param>
@@ -87,6 +98,12 @@ namespace MatrixOperations
             throw new Exception("The sizes of the matrices are not match");
         }
 
+        /// <summary>
+        /// Operator for multiplying two matrices.
+        /// </summary>
+        /// <param name="first">The first matrix</param>
+        /// <param name="second">The second matrix</param>
+        /// <returns></returns>
         public static Matrix operator *(Matrix first, Matrix second)
         {
             if(first.Columns == second.Rows)
@@ -110,6 +127,12 @@ namespace MatrixOperations
             throw new Exception();
         }
 
+        /// <summary>
+        /// Operator for scalar multiplying.
+        /// </summary>
+        /// <param name="factor">The factor</param>
+        /// <param name="second">The matrix</param>
+        /// <returns></returns>
         public static Matrix operator *(double factor, Matrix second)
         {
             int rows = second.Rows;
@@ -125,11 +148,19 @@ namespace MatrixOperations
             return new Matrix(temporary);
         }
 
+        /// <summary>
+        /// Convert the array into matrix.
+        /// </summary>
+        /// <param name="matrix">The two dimensional array</param>
         public static implicit operator Matrix(double[,] matrix)
         {
             return new Matrix(matrix);
         }
 
+        /// <summary>
+        /// Convert the matrix into two dimensional array.
+        /// </summary>
+        /// <param name="matrix">The matrix</param>
         public static implicit operator double[,](Matrix matrix)
         {
             int rows = matrix.Rows;
@@ -145,6 +176,10 @@ namespace MatrixOperations
             return temporary;
         }
 
+        /// <summary>
+        /// Makes the inverse matrix of this.
+        /// </summary>
+        /// <returns>Returns the inverse matrix.</returns>
         public Matrix Inverse()
         {
             if(this.Rows == this.Columns)
@@ -227,6 +262,12 @@ namespace MatrixOperations
             throw new Exception();
         }
 
+        /// <summary>
+        /// Swap two rows of a matrix.
+        /// </summary>
+        /// <param name="matrix">The matrix</param>
+        /// <param name="m">The first row</param>
+        /// <param name="n">The second row</param>
         private static void SwapRows(ref double[,] matrix, int m, int n)
         {
             if(m == n)
@@ -289,24 +330,19 @@ namespace MatrixOperations
         }
 
         /// <summary>
-        /// Rotates the matrix.
+        /// 
         /// </summary>
-        /// <param name="angle">The angle</param>
-        public void Rotate(double x = 0, double y = 0, double z = 0)
+        /// <param name="x">The rotation across x-axis</param>
+        /// <param name="y">The rotation across y-axis</param>
+        /// <param name="z">The rotation across y-axis</param>
+        public void Rotate3D(double x = 0, double y = 0, double z = 0)
         {
-            if(this.Rows > 3)
+            if(this.Rows != 3)
             {
                 throw new Exception();
             }
 
             double[,] rotationMatrix;
-            if(this.Rows == 2)
-            {
-                rotationMatrix = new double[2, 2] { 
-                                                    { Math.Cos(x), -Math.Sin(x) }, 
-                                                    { Math.Sin(x), Math.Cos(x) }
-                                                };
-            }
 
             double[,] rotateX = {   { 1, 0, 0 }, 
                                     { 0, Math.Cos(x), -Math.Sin(x) }, 
@@ -328,9 +364,15 @@ namespace MatrixOperations
             this.matrix = rotationMatrix * this;
         }
 
-        public void Translate(double x = 0, double y = 0, double z = 0)
+        /// <summary>
+        /// Translates the matrix.
+        /// </summary>
+        /// <param name="x">The translation across x-axis</param>
+        /// <param name="y">The translation across y-axis</param>
+        /// <param name="z">The translation across z-axis</param>
+        public void Translate3D(double x = 0, double y = 0, double z = 0)
         {
-            if(this.Rows > 3)
+            if(this.Rows != 3)
             {
                 throw new Exception();
             }
@@ -344,9 +386,15 @@ namespace MatrixOperations
             }
         }
 
-        public void Scale(double x = 1, double y = 1, double z = 1)
+        /// <summary>
+        /// Scales the matrix.
+        /// </summary>
+        /// <param name="x">The x factor</param>
+        /// <param name="y">The y factor</param>
+        /// <param name="z">The z factor</param>
+        public void Scale3D(double x = 1, double y = 1, double z = 1)
         {
-            if(this.Rows > 3)
+            if(this.Rows != 3)
             {
                 throw new Exception();
             }
@@ -380,7 +428,7 @@ namespace MatrixOperations
         }
 
         /// <summary>
-        /// returns the smallest elemnt of the matrix.
+        /// Returns the smallest element of the matrix.
         /// </summary>
         /// <returns></returns>
         public double GetSmallest()
@@ -399,6 +447,9 @@ namespace MatrixOperations
             return smallest;
         }
 
+        /// <summary>
+        /// Prints the matrix.
+        /// </summary>
         public void Print()
         {
             for(int i = 0; i < this.Rows; i++)

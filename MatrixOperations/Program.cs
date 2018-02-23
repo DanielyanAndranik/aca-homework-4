@@ -41,7 +41,28 @@ namespace MatrixOperations
             Matrix matrixFive = CreateMatrix("Five");
             double factor = ScalarFactor();
             Matrix tempThree = factor * matrixFive;
+            tempThree.Print();
 
+            Matrix matrixSix = CreateMatrix("Six");
+            Matrix tempFour = matrixSix.Inverse();
+            tempFour.Print();
+
+            Matrix matrixSeven = CreateMatrix("Seven");
+            Matrix tempFive = matrixSix.Transpose();
+            tempFive.Print();
+
+            Matrix matrixEight = CreateMatrix("Eight");
+            matrixEight.IsOrthogonal();
+
+            Matrix matrixNine = CreateMatrix("Nine");
+
+            matrixNine.Translate3D(1, 2, 3);
+
+            matrixNine.Scale3D(2, 3, 6);
+
+            matrixNine.Rotate3D(90, 45, 0);
+
+            Matrix matrixTen = CreateMatrix("Ten");
 
 
         }
